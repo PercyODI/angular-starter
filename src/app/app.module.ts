@@ -14,6 +14,8 @@ import {
   RouterModule,
   PreloadAllModules
 } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -26,6 +28,9 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
+import { reducers } from './app.reducers';
+import { effects } from './app.effects';
+
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
@@ -69,7 +74,9 @@ type StoreType = {
     RouterModule.forRoot(ROUTES, {
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
-    })
+    }),
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot(effects)
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
